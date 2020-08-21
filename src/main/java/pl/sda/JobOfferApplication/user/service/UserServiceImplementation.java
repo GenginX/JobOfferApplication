@@ -5,12 +5,15 @@ import pl.sda.JobOfferApplication.user.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.sda.JobOfferApplication.user.entity.UserEntity;
+import pl.sda.JobOfferApplication.user.exception.PasswordException;
 import pl.sda.JobOfferApplication.user.exception.UserException;
 import pl.sda.JobOfferApplication.user.model.UserInput;
 import pl.sda.JobOfferApplication.user.model.UserOutput;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,6 +21,7 @@ public class UserServiceImplementation implements UserService {
 
     public static final String NO_USER_FOUND_FOR_GIVEN_ID = "No User found for given id";
     public static final String USER_WITH_THIS_LOGIN_ALREADY_EXISTS = "User with this login, already exists";
+    public static final String PASSWORD_IS_WEAK = "Please provivide stronger password: length higher than 8, one big letter, one small letter, one digit, one special character";
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
 
@@ -44,6 +48,7 @@ public class UserServiceImplementation implements UserService {
 
 //       Dodac validacje czy Login ma wiecej niz 6 znakow i czy haslo ma 1 znak specjalny, 1 wielka litera i 1 cyfre, dlugos hasla > 8 znakow
         userInputValidation(userInput);
+        passwordValidation(userInput.getPassword());
 
         final String encode = passwordEncoder.encode(userInput.getPassword());
 
@@ -70,7 +75,23 @@ public class UserServiceImplementation implements UserService {
 
     private void userInputValidation(UserInput userInput) throws UserException{
         if(userRepository.existsByLogin(userInput.getLogin())){
-            throw new UserException(NO_USER_FOUND_FOR_GIVEN_ID);
+            throw new UserException(USER_WITH_THIS_LOGIN_ALREADY_EXISTS);
+        }
+    }
+
+    private void passwordValidation(String password) throws UserException {
+        Pattern bigLetter = Pattern.compile("[A-Z]");
+        Pattern smallLetter = Pattern.compile("[a-z]");
+        Pattern digit = Pattern.compile("[0-9]");
+        Pattern special = Pattern.compile("[!@#$%^&*()_+\\[\\]{};',.:|<>?]");
+
+        Matcher hasBigLetter = bigLetter.matcher(password);
+        Matcher hasSmallLetter = smallLetter.matcher(password);
+        Matcher hasDigit = digit.matcher(password);
+        Matcher hasSpecial = special.matcher(password);
+
+        if(password.length() < 8 || !hasDigit.find() || !hasBigLetter.find() || !hasSmallLetter.find() || !hasSpecial.find()){
+            throw new UserException(PASSWORD_IS_WEAK);
         }
     }
 }

@@ -3,7 +3,6 @@ package pl.sda.JobOfferApplication.user.model;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 
 @Getter
@@ -18,4 +17,5 @@ public class UserInput {
     private UserInput() {
         creationDate = LocalDate.now();
     }
+
 }
