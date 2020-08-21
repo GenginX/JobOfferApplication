@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.sda.JobOfferApplication.user.exception.PasswordException;
 import pl.sda.JobOfferApplication.user.exception.UserException;
 import pl.sda.JobOfferApplication.user.model.UserInput;
 import pl.sda.JobOfferApplication.user.model.UserOutput;
@@ -38,7 +39,7 @@ public class UserController {
                 .body(userById);
     }
     @PostMapping
-    public ResponseEntity<Void> postUser(@RequestBody UserInput userInput) throws UserException {
+    public ResponseEntity<Void> postUser(@RequestBody UserInput userInput) throws UserException, PasswordException {
         userService.createUser(userInput);
         return ResponseEntity.
                 status(HttpStatus.CREATED).
