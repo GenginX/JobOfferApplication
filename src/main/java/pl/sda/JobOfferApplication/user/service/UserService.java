@@ -8,7 +8,7 @@ import pl.sda.JobOfferApplication.user.model.UserOutput;
 import java.util.List;
 
 public interface UserService {
-    public void createUser(UserInput userInput) throws UserException, PasswordException;
+    public void createUser(UserInput userInput) throws UserException;
 
     public List<UserOutput> getAllUsers();
 
