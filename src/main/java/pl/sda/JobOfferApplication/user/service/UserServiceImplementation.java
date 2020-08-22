@@ -5,7 +5,6 @@ import pl.sda.JobOfferApplication.user.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.sda.JobOfferApplication.user.entity.UserEntity;
-import pl.sda.JobOfferApplication.user.exception.PasswordException;
 import pl.sda.JobOfferApplication.user.exception.UserException;
 import pl.sda.JobOfferApplication.user.model.UserInput;
 import pl.sda.JobOfferApplication.user.model.UserOutput;
@@ -21,7 +20,8 @@ public class UserServiceImplementation implements UserService {
 
     public static final String NO_USER_FOUND_FOR_GIVEN_ID = "No User found for given id";
     public static final String USER_WITH_THIS_LOGIN_ALREADY_EXISTS = "User with this login, already exists";
-    public static final String PASSWORD_IS_WEAK = "Please provivide stronger password: length higher than 8, one big letter, one small letter, one digit, one special character";
+    public static final String PASSWORD_IS_WEAK = "Please provide stronger password: length higher than 8, one big letter, one small letter, one digit, one special character";
+    public static final String USER_EXISTS = "User found";
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
 
@@ -62,16 +62,23 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public UserOutput getUserById(Long id) throws UserException {
+        return getUserEntity(id).convertEntityToOutput();
+    }
+
+    private UserEntity getUserEntity(Long id) throws UserException {
         final Optional<UserEntity> optionalUserEntity = userRepository.findById(id);
         if(!optionalUserEntity.isPresent()){
             throw new UserException(NO_USER_FOUND_FOR_GIVEN_ID);
         }
-        return optionalUserEntity.get().convertEntityToOutput();
-//                .stream()
-//                .map(UserEntity::convertEntityToOutput)
-//                .findAny()
-//                .orElse(null);
+        return optionalUserEntity.get();
     }
+
+    @Override
+    public void deleteUserById(Long id) throws UserException {
+        UserEntity userEntity = getUserEntity(id);
+        userRepository.delete(userEntity);
+    }
+
 
     private void userInputValidation(UserInput userInput) throws UserException{
         if(userRepository.existsByLogin(userInput.getLogin())){
