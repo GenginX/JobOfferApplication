@@ -14,7 +14,7 @@ public class UserOutput {
     private Long id;
     private String login;
     private String name;
-    private LocalDate creationDate;
+    private String creationDate;
 
 
 }

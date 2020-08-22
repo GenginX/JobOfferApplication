@@ -21,10 +21,10 @@ public class UserEntity {
 
     private String login;
     private String name;
-    private LocalDate creationDate;
+    private String  creationDate;
     private String password;
 
-    public UserEntity(String login, String name, LocalDate creationDate, String password){
+    public UserEntity(String login, String name, String  creationDate, String password){
         this.login = login;
         this.name = name;
         this.creationDate = creationDate;
