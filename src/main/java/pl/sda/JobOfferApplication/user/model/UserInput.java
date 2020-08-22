@@ -18,4 +18,11 @@ public class UserInput {
         creationDate = LocalDate.now();
     }
 
+    public UserInput(String login, String name, String password){
+        this.login = login;
+        this.name = name;
+        this.creationDate = LocalDate.now();
+        this.password = password;
+    }
+
 }
