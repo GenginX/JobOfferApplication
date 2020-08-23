@@ -30,8 +30,8 @@ class UserServiceImplementationTest {
     @Test
     public void getCorrectUserById() throws UserException {
         //given
-        UserInput userInput = new UserInput("TestLogin", "TestName", "TestPassword2@");
-        UserInput userInput1 = new UserInput("TestLogin2", "TestName2", "TestPassword1!");
+        UserInput userInput = new UserInput("TestUser", "TestName", "TestPassword1!");
+        UserInput userInput1 = new UserInput("TestUer1", "TestName1", "TestPassword1!");
         userService.createUser(userInput);
         userService.createUser(userInput1);
         Long usedId = 2L;
@@ -46,8 +46,8 @@ class UserServiceImplementationTest {
     @Test
     public void unHappyPathGetCorrectUserById() throws UserException {
         // given
-        UserInput userInput = new UserInput("TestLogin", "TestName", "TestPassword2@");
-        UserInput userInput1 = new UserInput("TestLogin2", "TestName2", "TestPassword1!");
+        UserInput userInput = new UserInput("TestUser", "TestName", "TestPassword1");
+        UserInput userInput1 = new UserInput("TestUer1", "TestName1", "TestPassword1");
         userService.createUser(userInput);
         userService.createUser(userInput1);
         Long usedId = 5L;

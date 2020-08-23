@@ -4,13 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.sda.JobOfferApplication.user.exception.PasswordException;
 import pl.sda.JobOfferApplication.user.exception.UserException;
 import pl.sda.JobOfferApplication.user.model.UserInput;
 import pl.sda.JobOfferApplication.user.model.UserOutput;
 import pl.sda.JobOfferApplication.user.service.UserService;
 
-import java.util.Collections;
 import java.util.List;
 
 @RestController

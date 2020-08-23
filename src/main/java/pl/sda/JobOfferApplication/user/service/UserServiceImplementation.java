@@ -5,7 +5,6 @@ import pl.sda.JobOfferApplication.user.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.sda.JobOfferApplication.user.entity.UserEntity;
-import pl.sda.JobOfferApplication.user.exception.PasswordException;
 import pl.sda.JobOfferApplication.user.exception.UserException;
 import pl.sda.JobOfferApplication.user.model.UserInput;
 import pl.sda.JobOfferApplication.user.model.UserOutput;

@@ -37,7 +37,7 @@ class UserControllerTest {
     @Test
     public void testCreateUserController() throws Exception {
         //given
-        UserInput userInput = new UserInput("Adam123", "Michal", "Adam1234!");
+        UserInput userInput = new UserInput("Adam123", "Adam", "Adam1234!");
         MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders
                 .post(UserController.USERS_PATH)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
