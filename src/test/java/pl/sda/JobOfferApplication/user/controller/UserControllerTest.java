@@ -2,6 +2,7 @@ package pl.sda.JobOfferApplication.user.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.EqualsAndHashCode;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,9 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import pl.sda.JobOfferApplication.JobOfferApplication;
 import pl.sda.JobOfferApplication.user.Repository.UserRepository;
+import pl.sda.JobOfferApplication.user.exception.UserException;
 import pl.sda.JobOfferApplication.user.model.UserInput;
+import pl.sda.JobOfferApplication.user.service.UserService;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -25,6 +28,9 @@ class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private UserRepository userRepository;
@@ -57,4 +63,36 @@ class UserControllerTest {
             throw new RuntimeException(e);
         }
     }
+
+    @Test
+    public void testGetUserByIdController() throws Exception {
+        // given
+        UserInput userInput = new UserInput("Adam123", "Adam", "Adam1234!");
+        UserInput userInput2 = new UserInput("Adam1234", "Adam2", "Adam1234!@");
+        userService.createUser(userInput);
+        userService.createUser(userInput2);
+        MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders
+                .get(UserController.USERS_PATH + "/" + 2)
+                .contentType(MediaType.APPLICATION_JSON_VALUE);
+        //when
+        ResultActions resultActions = mockMvc.perform(mockHttpServletRequestBuilder);
+
+        //then
+        resultActions.andExpect(status().isOk());
+    }
+
+    @Test
+    public void unHappyPathTestGetUserByIdController() throws Exception {
+        //given
+        MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders
+                .get(UserController.USERS_PATH + "/" + 2)
+                .contentType(MediaType.APPLICATION_JSON_VALUE);
+
+        //when
+        ResultActions resultActions = mockMvc.perform(mockHttpServletRequestBuilder);
+
+        //then
+        resultActions.andExpect(status().isNotFound());
+    }
+
 }
