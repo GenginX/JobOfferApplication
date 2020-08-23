@@ -14,7 +14,7 @@ public class UserInput {
     private LocalDate creationDate;
     private String password;
 
-    private UserInput() {
+    public UserInput() {
         creationDate = LocalDate.now();
     }
 
@@ -24,5 +24,4 @@ public class UserInput {
         this.creationDate = LocalDate.now();
         this.password = password;
     }
-
 }
