@@ -95,4 +95,36 @@ class UserControllerTest {
         resultActions.andExpect(status().isNotFound());
     }
 
+    @Test
+    public void userDeletion() throws Exception {
+
+        //given
+        UserInput input = new UserInput("login1234", "Kuba", "Kubasdaq1!");
+        userService.createUser(input);
+        final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .delete(UserController.USERS_PATH + "/1")
+                .contentType(MediaType.APPLICATION_JSON_VALUE);
+
+        //when
+        final ResultActions resultActions = mockMvc.perform(requestBuilder);
+        //then
+        resultActions.andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void unhappyUserDeletion() throws Exception {
+
+        //given
+
+        final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .delete(UserController.USERS_PATH + "/1")
+                .contentType(MediaType.APPLICATION_JSON_VALUE);
+
+        //when
+        final ResultActions resultActions = mockMvc.perform(requestBuilder);
+
+        //then
+        resultActions.andExpect(status().isNotFound());
+    }
+
 }
