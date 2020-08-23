@@ -8,6 +8,7 @@ import pl.sda.JobOfferApplication.user.model.UserOutput;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "USERS")
@@ -23,6 +24,9 @@ public class UserEntity {
     private String name;
     private LocalDate  creationDate;
     private String password;
+
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+    private List<JobOfferEntity> jobOfferEntities;
 
     public UserEntity(String login, String name, LocalDate  creationDate, String password){
         this.login = login;
