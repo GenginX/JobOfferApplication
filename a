@@ -1,0 +1,23 @@
+[33mcommit b8d5700781abe16ca57b42aeb2daf33512a92e42[m[33m ([m[1;36mHEAD -> [m[1;32mvalidationExcercise[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: kaczmarm <0kaczmar9@gmail.com>
+Date:   Sun Aug 2 15:34:06 2020 +0200
+
+    Created user endpoint for creae, getbyid, getall, and simple validation - not tested
+
+[33mcommit 848f4f1e6ab2501f3005476b9100ed3c1f5b9a78[m
+Author: kaczmarm <0kaczmar9@gmail.com>
+Date:   Sat Aug 1 15:59:14 2020 +0200
+
+    User API
+
+[33mcommit 5bb620d534f790400bd384b7a7a453bc06bab06a[m
+Author: kaczmarm <0kaczmar9@gmail.com>
+Date:   Sat Aug 1 11:59:36 2020 +0200
+
+    Initializing project
+
+[33mcommit 86b6cb704dbea80c9890e24f81c87863f678fa9a[m
+Author: Michał Kaczmarek <53773405+GenginX@users.noreply.github.com>
+Date:   Sat Aug 1 11:39:35 2020 +0200
+
+    Initial commit

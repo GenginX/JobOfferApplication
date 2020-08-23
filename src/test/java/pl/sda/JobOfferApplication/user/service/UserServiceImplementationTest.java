@@ -2,11 +2,13 @@ package pl.sda.JobOfferApplication.user.service;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+
+import pl.sda.JobOfferApplication.user.entity.UserEntity;
+import pl.sda.JobOfferApplication.user.exception.PasswordException;
+import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import pl.sda.JobOfferApplication.user.Repository.UserRepository;
-import pl.sda.JobOfferApplication.user.entity.UserEntity;
-import pl.sda.JobOfferApplication.user.exception.PasswordException;
 import pl.sda.JobOfferApplication.user.exception.UserException;
 import pl.sda.JobOfferApplication.user.model.UserInput;
 import pl.sda.JobOfferApplication.user.model.UserOutput;
@@ -25,7 +27,7 @@ class UserServiceImplementationTest {
     UserRepository userRepository;
 
     @AfterEach
-    void tearDown() {
+    void tearDown(){
         userRepository.deleteAll();
     }
 
@@ -70,5 +72,34 @@ class UserServiceImplementationTest {
             System.out.println(e.getMessage());
             //"User with this login, already exists"
         }
+    public void getCorrectUserById() throws UserException {
+        //given
+        UserInput userInput = new UserInput("TestLogin", "TestName", "TestPassword2@");
+        UserInput userInput1 = new UserInput("TestLogin2", "TestName2", "TestPassword1!");
+        userService.createUser(userInput);
+        userService.createUser(userInput1);
+        Long usedId = 2L;
+
+        //when
+        UserOutput userById = userService.getUserById(usedId);
+
+        //then
+        assertEquals(userById.getId(),usedId);
+    }
+
+    @Test
+    public void unHappyPathGetCorrectUserById() throws UserException {
+        // given
+        UserInput userInput = new UserInput("TestLogin", "TestName", "TestPassword2@");
+        UserInput userInput1 = new UserInput("TestLogin2", "TestName2", "TestPassword1!");
+        userService.createUser(userInput);
+        userService.createUser(userInput1);
+        Long usedId = 5L;
+
+        // when
+        Executable executable = () -> userService.getUserById(usedId);
+
+        //then
+        assertThrows(UserException.class, executable);
     }
 }
