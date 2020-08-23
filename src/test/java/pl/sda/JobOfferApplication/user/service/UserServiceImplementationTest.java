@@ -6,13 +6,17 @@ import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import pl.sda.JobOfferApplication.user.Repository.UserRepository;
+import pl.sda.JobOfferApplication.user.entity.UserEntity;
 import pl.sda.JobOfferApplication.user.exception.UserException;
 import pl.sda.JobOfferApplication.user.model.UserInput;
-import pl.sda.JobOfferApplication.user.model.UserOutput;
 
 
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static pl.sda.JobOfferApplication.user.service.UserServiceImplementation.NO_USER_FOUND_FOR_GIVEN_ID;
+
 @SpringBootTest
 class UserServiceImplementationTest {
 
@@ -23,39 +27,33 @@ class UserServiceImplementationTest {
     UserRepository userRepository;
 
     @AfterEach
-    void tearDown(){
+    void tearDown() {
         userRepository.deleteAll();
     }
 
     @Test
-    public void getCorrectUserById() throws UserException {
+    public void deleteUserById() throws UserException {
         //given
-        UserInput userInput = new UserInput("TestLogin", "TestName", "TestPassword2@");
-        UserInput userInput1 = new UserInput("TestLogin2", "TestName2", "TestPassword1!");
+        UserInput userInput = new UserInput("Karoll", "Karol", "Piesek!1");
         userService.createUser(userInput);
-        userService.createUser(userInput1);
-        Long usedId = 2L;
 
         //when
-        UserOutput userById = userService.getUserById(usedId);
+        userService.deleteUserById(1L);
 
         //then
-        assertEquals(userById.getId(),usedId);
+        List<UserEntity> allUsers = userRepository.findAll();
+        assertTrue(allUsers.size() == 0);
     }
 
     @Test
-    public void unHappyPathGetCorrectUserById() throws UserException {
-        // given
-        UserInput userInput = new UserInput("TestLogin", "TestName", "TestPassword2@");
-        UserInput userInput1 = new UserInput("TestLogin2", "TestName2", "TestPassword1!");
-        userService.createUser(userInput);
-        userService.createUser(userInput1);
-        Long usedId = 5L;
+    public void unhappyDeleteUserById() {
+        //given
 
-        // when
-        Executable executable = () -> userService.getUserById(usedId);
+        //when
+        Executable executable = () -> userService.deleteUserById(1L);
 
         //then
-        assertThrows(UserException.class, executable);
+        UserException userException = assertThrows(UserException.class, executable);
+        assertEquals(NO_USER_FOUND_FOR_GIVEN_ID, userException.getMessage());
     }
 }
