@@ -4,7 +4,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import pl.sda.JobOfferApplication.user.entity.UserEntity;
-import pl.sda.JobOfferApplication.user.exception.PasswordException;
 import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,7 +31,7 @@ class UserServiceImplementationTest {
     }
 
     @Test
-    public void isUserCreated() throws UserException, PasswordException {
+    public void isUserCreated() throws UserException {
 
         //given
         UserInput input = new UserInput("SDAblabla", "superuser","SDAuser1@");
@@ -48,7 +47,7 @@ class UserServiceImplementationTest {
     }
 
     @Test
-    public void passwordValidation() throws UserException, PasswordException {
+    public void passwordValidation() throws UserException {
 
         try{
             UserInput input = new UserInput("SDAblabla", "superuser","SDA");
@@ -62,16 +61,18 @@ class UserServiceImplementationTest {
     }
 
     @Test
-    public void userInputValidation() throws UserException, PasswordException{
-        try{
-            UserInput input = new UserInput("SDAblabla", "superuser","SDAascdsvf1@#$");
-            UserInput input2 = new UserInput("SDAblabla", "gyfrw","njl1W223!@");
+    public void userInputValidation() throws UserException {
+        try {
+            UserInput input = new UserInput("SDAblabla", "superuser", "SDAascdsvf1@#$");
+            UserInput input2 = new UserInput("SDAblabla", "gyfrw", "njl1W223!@");
             userService.createUser(input);
             userService.createUser(input2);
         } catch (UserException e) {
             System.out.println(e.getMessage());
             //"User with this login, already exists"
         }
+    }
+    @Test
     public void getCorrectUserById() throws UserException {
         //given
         UserInput userInput = new UserInput("TestUser", "TestName", "TestPassword1!");
