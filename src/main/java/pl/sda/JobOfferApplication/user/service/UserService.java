@@ -17,4 +17,5 @@ public interface UserService {
     void deleteUserById(Long id) throws UserException;
 
     public UserEntity getUserEntity(Long id) throws UserException;
+
 }
