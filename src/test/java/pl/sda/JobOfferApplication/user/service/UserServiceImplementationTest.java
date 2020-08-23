@@ -2,12 +2,11 @@ package pl.sda.JobOfferApplication.user.service;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-
-import pl.sda.JobOfferApplication.user.entity.UserEntity;
 import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import pl.sda.JobOfferApplication.user.Repository.UserRepository;
+import pl.sda.JobOfferApplication.user.entity.UserEntity;
 import pl.sda.JobOfferApplication.user.exception.UserException;
 import pl.sda.JobOfferApplication.user.model.UserInput;
 import pl.sda.JobOfferApplication.user.model.UserOutput;
@@ -15,7 +14,6 @@ import pl.sda.JobOfferApplication.user.model.UserOutput;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import static pl.sda.JobOfferApplication.user.service.UserServiceImplementation.NO_USER_FOUND_FOR_GIVEN_ID;
 
 @SpringBootTest
@@ -28,7 +26,7 @@ class UserServiceImplementationTest {
     UserRepository userRepository;
 
     @AfterEach
-    void tearDown(){
+    void tearDown() {
         userRepository.deleteAll();
     }
 
@@ -36,7 +34,7 @@ class UserServiceImplementationTest {
     public void isUserCreated() throws UserException {
 
         //given
-        UserInput input = new UserInput("SDAblabla", "superuser","SDAuser1@");
+        UserInput input = new UserInput("SDAblabla", "superuser", "SDAuser1@");
         //when
         userService.createUser(input);
         //then
@@ -51,8 +49,8 @@ class UserServiceImplementationTest {
     @Test
     public void passwordValidation() throws UserException {
 
-        try{
-            UserInput input = new UserInput("SDAblabla", "superuser","SDA");
+        try {
+            UserInput input = new UserInput("SDAblabla", "superuser", "SDA");
             userService.createUser(input);
             String usedPassword = input.getPassword();
             //UserServiceImplementation usi = new UserServiceImplementation(); instancja - odwołanie do metod z userServiceImplementation
@@ -88,7 +86,7 @@ class UserServiceImplementationTest {
         UserOutput userById = userService.getUserById(usedId);
 
         //then
-        assertEquals(userById.getId(),usedId);
+        assertEquals(userById.getId(), usedId);
     }
 
     @Test
@@ -140,4 +138,5 @@ class UserServiceImplementationTest {
                 .findFirst()
                 .get();
     }
+
 }

@@ -8,6 +8,7 @@ import java.time.LocalDate;
 
 @Getter
 @ToString
+
 public class UserInput {
 
     private String login;

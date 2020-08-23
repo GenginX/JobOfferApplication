@@ -22,20 +22,24 @@ public class UserEntity {
 
     private String login;
     private String name;
-    private LocalDate  creationDate;
+    private LocalDate creationDate;
     private String password;
 
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
     private List<JobOfferEntity> jobOfferEntities;
 
-    public UserEntity(String login, String name, LocalDate  creationDate, String password){
+    public UserEntity(String login, String name, LocalDate creationDate, String password) {
         this.login = login;
         this.name = name;
         this.creationDate = creationDate;
         this.password = password;
     }
 
-    public UserOutput convertEntityToOutput(){
+    public UserOutput convertEntityToOutput() {
         return new UserOutput(id, login, name, creationDate);
+    }
+
+    public String GetName() {
+        return name;
     }
 }
