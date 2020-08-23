@@ -74,6 +74,7 @@ class UserServiceImplementationTest {
             //"User with this login, already exists"
         }
     }
+
     @Test
     public void getCorrectUserById() throws UserException {
         //given
@@ -132,12 +133,11 @@ class UserServiceImplementationTest {
         assertEquals(NO_USER_FOUND_FOR_GIVEN_ID, userException.getMessage());
     }
 
-    private Long getLastIdInList(){
-        Long firstFoundId = userService.getAllUsers()
+    private Long getLastIdInList() {
+        return userService.getAllUsers()
                 .stream()
                 .map(e -> e.getId())
                 .findFirst()
                 .get();
-        return firstFoundId;
     }
 }
