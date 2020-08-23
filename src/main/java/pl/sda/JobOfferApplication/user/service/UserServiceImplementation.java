@@ -65,7 +65,7 @@ public class UserServiceImplementation implements UserService {
         return getUserEntity(id).convertEntityToOutput();
     }
 
-    private UserEntity getUserEntity(Long id) throws UserException {
+    public UserEntity getUserEntity(Long id) throws UserException {
         final Optional<UserEntity> optionalUserEntity = userRepository.findById(id);
         if(!optionalUserEntity.isPresent()){
             throw new UserException(NO_USER_FOUND_FOR_GIVEN_ID);
