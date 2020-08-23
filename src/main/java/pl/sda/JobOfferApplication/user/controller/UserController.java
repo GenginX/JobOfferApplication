@@ -44,4 +44,19 @@ public class UserController {
                 status(HttpStatus.CREATED).
                 build();
     }
+
+//    W ramach aplikacji powinien zostać udostępniony end-point umożliwiający usunięcie dowolnego użytkownika po jego ID.
+//
+//    Założenia:
+//            - Uzytkownik musi istnieć aby mażna było go usunąć. Poprawne wykonanie operacji:  HTTP 204 NO_CONTENT
+//            - Brak podanego do usunięcia użytkownika w systemie:                              HTTP 404  NOT_FOUND
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<UserOutput> deleteUserById(@PathVariable (value = "id") Long id) throws UserException {
+        userService.deleteUserById(id);
+        return ResponseEntity
+                .status(HttpStatus.NO_CONTENT).build();
+
+    }
+
 }

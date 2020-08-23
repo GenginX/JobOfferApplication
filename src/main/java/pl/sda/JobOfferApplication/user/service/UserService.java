@@ -13,4 +13,5 @@ public interface UserService {
 
     UserOutput getUserById(Long id) throws UserException;
 
+    void deleteUserById(Long id) throws UserException;
 }
