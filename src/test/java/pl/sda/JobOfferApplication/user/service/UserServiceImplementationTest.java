@@ -16,6 +16,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import static pl.sda.JobOfferApplication.user.service.UserServiceImplementation.NO_USER_FOUND_FOR_GIVEN_ID;
+
 @SpringBootTest
 class UserServiceImplementationTest {
 
@@ -102,5 +104,31 @@ class UserServiceImplementationTest {
 
         //then
         assertThrows(UserException.class, executable);
+    }
+
+    @Test
+    public void deleteUserById() throws UserException {
+        //given
+        UserInput userInput = new UserInput("Karoll", "Karol", "Piesek!1");
+        userService.createUser(userInput);
+
+        //when
+        userService.deleteUserById(1L);
+
+        //then
+        List<UserEntity> allUsers = userRepository.findAll();
+        assertTrue(allUsers.size() == 0);
+    }
+
+    @Test
+    public void unhappyDeleteUserById() {
+        //given
+
+        //when
+        Executable executable = () -> userService.deleteUserById(1L);
+
+        //then
+        UserException userException = assertThrows(UserException.class, executable);
+        assertEquals(NO_USER_FOUND_FOR_GIVEN_ID, userException.getMessage());
     }
 }
