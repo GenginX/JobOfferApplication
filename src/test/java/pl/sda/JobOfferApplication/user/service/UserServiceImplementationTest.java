@@ -15,6 +15,7 @@ import pl.sda.JobOfferApplication.user.model.UserOutput;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 import static pl.sda.JobOfferApplication.user.service.UserServiceImplementation.NO_USER_FOUND_FOR_GIVEN_ID;
 
 @SpringBootTest

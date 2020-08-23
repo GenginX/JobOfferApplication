@@ -4,20 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.sda.JobOfferApplication.user.exception.PasswordException;
 import pl.sda.JobOfferApplication.user.exception.UserException;
 import pl.sda.JobOfferApplication.user.model.UserInput;
 import pl.sda.JobOfferApplication.user.model.UserOutput;
 import pl.sda.JobOfferApplication.user.service.UserService;
 
-import java.util.Collections;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping(UserController.USERS_PATH)
 public class UserController {
 
 
+    public static final String USERS_PATH = "/users";
     private UserService userService;
 
     @Autowired
@@ -39,7 +38,7 @@ public class UserController {
                 .body(userById);
     }
     @PostMapping
-    public ResponseEntity<Void> postUser(@RequestBody UserInput userInput) throws UserException, PasswordException {
+    public ResponseEntity<Void> postUser(@RequestBody UserInput userInput) throws UserException {
         userService.createUser(userInput);
         return ResponseEntity.
                 status(HttpStatus.CREATED).
