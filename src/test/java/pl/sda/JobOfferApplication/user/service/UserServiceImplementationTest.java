@@ -81,7 +81,7 @@ class UserServiceImplementationTest {
         UserInput userInput1 = new UserInput("TestUer1", "TestName1", "TestPassword1!");
         userService.createUser(userInput);
         userService.createUser(userInput1);
-        Long usedId = 2L;
+        Long usedId = getLastIdInList();
 
         //when
         UserOutput userById = userService.getUserById(usedId);
@@ -113,7 +113,7 @@ class UserServiceImplementationTest {
         userService.createUser(userInput);
 
         //when
-        userService.deleteUserById(1L);
+        userService.deleteUserById(getLastIdInList());
 
         //then
         List<UserEntity> allUsers = userRepository.findAll();
@@ -130,5 +130,14 @@ class UserServiceImplementationTest {
         //then
         UserException userException = assertThrows(UserException.class, executable);
         assertEquals(NO_USER_FOUND_FOR_GIVEN_ID, userException.getMessage());
+    }
+
+    private Long getLastIdInList(){
+        Long firstFoundId = userService.getAllUsers()
+                .stream()
+                .map(e -> e.getId())
+                .findFirst()
+                .get();
+        return firstFoundId;
     }
 }
